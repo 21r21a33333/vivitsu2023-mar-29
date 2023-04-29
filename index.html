@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: white;">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip-Prep</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<section class="side-bar" >
+    <button style="border-color: black;color: black;">New chat</button>
+    <div class="history" ></div>
+    <nav style="border-color: black;">
+        <p style="color: black; ">Made by Team <b>VOID</b></p>
+    </nav>
+</section>   
+<div class="main">
+    <h1>Trip-Prep</h1>
+    <div>
+        <!-- "book_flight": "https://www.google.com/flights/",
+    "book_hotel": "https://www.google.com/travel/hotels",
+    "vacation_": "https://www.google.com/travel/",
+    "travel_insurance": "https://www.google.com/search?q=travel+insurance",
+    "car_rental": "https://www.google.com/travel/carrentals",
+    "cruise_deals": "https://www.google.com/search?q=cruise+deals",
+    "things_to_do": "https://www.google.com/travel/things-to-do",
+    "plan_a_trip":"https://tripplanner.ai/",
+    "book_train":"https://www.goibibo.com/trains/",
+    "book_bus":"https://www.goibibo.com/bus/", -->
+            
+        <button style="border-color:black;background-color: #fcda20;color: black;" id="re1">book_flight</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re2">book_hotel</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re3">vacation_</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re4">travel_insurance</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re5">car_rental</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re6">cruise_deals</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re7">things_to_do</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re8">plan_a_trip</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re9">book_train</button>
+        <button style="border-color:black;background-color: #fcda20;color: black;"id="re10">book_bus</button>
+    </div>
+    <p id="output" style="border-color: black;"></p>
+    <div class="botom-section">
+        <div class="input-container" style="width: 90%;">
+            <input id="inputs"/>
+            
+                <button id="submit" style="display: block;text-align: center;background-color:#fcda20; color:black;">&#10149;</button>
+            
+            
+        </div>
+    </div>
+    
+</section >  
+
+<button id="start-recognition" style="background-color: black;">Start Recognition</button>
+
+<script>
+    // check if browser supports speech recognition API
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+
+        // create a new instance of speech recognition
+        const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
+        // when recognition starts, update button text
+        recognition.onstart = function() {
+            document.getElementById('start-recognition').textContent = 'Listening...';
+        };
+
+        // when recognition ends, reset button text
+        recognition.onend = function() {
+            document.getElementById('start-recognition').textContent = 'Start Recognition';
+        };
+
+        // when recognition receives a result, update input value
+        recognition.onresult = function(event) {
+            const result = event.results[0][0].transcript;
+            document.getElementById('inputs').value = result;
+        };
+
+        // add click event listener to start recognition button
+        document.getElementById('start-recognition').addEventListener('click', function() {
+            recognition.start();
+        });
+
+    } else {
+        // speech recognition not supported
+        alert('Speech recognition not supported in this browser.');
+    }
+</script>
+
+
+
+
+<div  class="container mt-5 " style="background-color: rgb(255, 255, 255);">
+    <div id="hides" >
+            <p style="color: black;" class="lead  mt-4" >Select Voice</p>
+        
+        <!-- Select Menu for Voice -->
+        <select id="voices" class="form-select bg-secondary text-light"></select>
+
+        <!-- Range Slliders for Volume, Rate & Pitch -->
+        <div class="d-flex mt-4 text-light">
+        <div>
+            <p class="lead">Volume</p>
+            <input type="range" min="0" max="1" value="1" step="0.1" id="volume" />
+            <span id="volume-label" class="ms-2">1</span>
+        </div>
+        <div class="mx-5">
+            <p class="lead">Rate</p>
+            <input type="range" min="0.1" max="10" value="1" id="rate" step="0.1" />
+            <span id="rate-label" class="ms-2">1</span>
+        </div>
+        <div>
+            <p class="lead">Pitch</p>
+            <input type="range" min="0" max="2" value="1" step="0.1" id="pitch" />
+            <span id="pitch-label" class="ms-2">1</span>
+        </div>
+        </div>
+        <button id="pause" class="btn btn-warning mt-5 me-3">Pause</button>
+        <button id="resume" class="btn btn-info mt-5 me-3">Resume</button>
+        <button id="cancel" class="btn btn-danger mt-5 me-3">Cancel</button>
+    </div>
+    <button id="toggle" style="background-color: black;" title="volume settings">&#9881;</button>
+    <script>
+        const targetDiv = document.getElementById("hides");
+        const btn = document.getElementById("toggle");
+        btn.onclick = function () {
+          if (targetDiv.style.display !== "none") {
+            targetDiv.style.display = "none";                         
+          } else {
+            targetDiv.style.display = "block";
+          }
+        };
+      </script>
+    
+
+    
+
+    <!-- Control Buttons
+    <div id ="playsetting" class="mb-5">
+      
+    </section> -->
+</div>
+
+<script src="app.js"></script> 
+</body>
+</html>
